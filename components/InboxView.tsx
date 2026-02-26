@@ -8,6 +8,7 @@ import TaskCard from '@/components/TaskCard';
 interface InboxViewProps {
   tasks: Task[];
   onRefresh: () => void;
+  onDetail: (task: Task) => void;
 }
 
 const PRIORITY_ORDER: Record<string, number> = {
@@ -17,7 +18,7 @@ const PRIORITY_ORDER: Record<string, number> = {
   none: 3,
 };
 
-export default function InboxView({ tasks, onRefresh }: InboxViewProps) {
+export default function InboxView({ tasks, onRefresh, onDetail }: InboxViewProps) {
   const [movingIds, setMovingIds] = useState<Set<string>>(new Set());
 
   // Only show inbox tasks: date is null and not done
@@ -63,9 +64,9 @@ export default function InboxView({ tasks, onRefresh }: InboxViewProps) {
     [onRefresh]
   );
 
-  const handleDetail = useCallback((_task: Task) => {
-    // Task detail is handled by parent
-  }, []);
+  const handleDetail = useCallback((task: Task) => {
+    onDetail(task);
+  }, [onDetail]);
 
   if (inboxTasks.length === 0) {
     return (

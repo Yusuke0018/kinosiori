@@ -7,6 +7,7 @@ import TodayView from '@/components/TodayView';
 import InboxView from '@/components/InboxView';
 import CalendarView from '@/components/CalendarView';
 import TabNav from '@/components/TabNav';
+import TaskDetail from '@/components/TaskDetail';
 import SeasonalBackground from '@/components/seasonal/SeasonalBackground';
 import { getCurrentSekki } from '@/lib/sekki';
 import { useSwipe } from '@/lib/useSwipe';
@@ -23,6 +24,9 @@ export default function Home() {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
   });
+
+  // Task detail editing state
+  const [detailTask, setDetailTask] = useState<Task | null>(null);
 
   // Slide animation state
   const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
@@ -99,6 +103,43 @@ export default function Home() {
     fetchCalendarTasks();
   };
 
+  // Task detail handlers
+  const handleOpenDetail = useCallback((task: Task) => {
+    setDetailTask(task);
+  }, []);
+
+  const handleCloseDetail = useCallback(() => {
+    setDetailTask(null);
+  }, []);
+
+  const handleUpdateTask = useCallback(async (id: string, updates: Partial<Task>) => {
+    try {
+      const res = await fetch(`/api/todos/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      });
+      if (res.ok) {
+        handleRefresh();
+      }
+    } catch (e) {
+      console.error('Failed to update task:', e);
+    }
+  }, []);
+
+  const handleDeleteTask = useCallback(async (id: string) => {
+    try {
+      const res = await fetch(`/api/todos/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        handleRefresh();
+      }
+    } catch (e) {
+      console.error('Failed to delete task:', e);
+    }
+  }, []);
+
   // Tab switching with slide animation
   const switchTab = useCallback((direction: 'left' | 'right') => {
     if (isAnimating) return;
@@ -107,10 +148,8 @@ export default function Home() {
     let nextIndex: number;
 
     if (direction === 'left') {
-      // Swipe left = go to next tab
       nextIndex = (currentIndex + 1) % TABS.length;
     } else {
-      // Swipe right = go to previous tab
       nextIndex = (currentIndex - 1 + TABS.length) % TABS.length;
     }
 
@@ -120,12 +159,10 @@ export default function Home() {
     setIsAnimating(true);
     setSlideDirection(direction);
 
-    // After animation out, switch tab and animate in
     setTimeout(() => {
       setActiveTab(nextTab);
       setSlideDirection(direction === 'left' ? 'right' : 'left');
 
-      // Reset after animate-in completes
       requestAnimationFrame(() => {
         setTimeout(() => {
           setSlideDirection(null);
@@ -157,7 +194,6 @@ export default function Home() {
     }, 150);
   }, [activeTab, isAnimating]);
 
-  // Swipe handlers
   const swipeHandlers = useSwipe({
     onSwipeLeft: () => switchTab('left'),
     onSwipeRight: () => switchTab('right'),
@@ -168,7 +204,6 @@ export default function Home() {
   const todayCount = todayTasks.filter(t => !t.done).length;
   const inboxCount = inboxTasks.length;
 
-  // Slide animation classes
   const getSlideStyle = (): React.CSSProperties => {
     if (!slideDirection) return { transform: 'translateX(0)', opacity: 1, transition: 'transform 0.2s ease-out, opacity 0.15s ease-out' };
     if (slideDirection === 'left') return { transform: 'translateX(-30px)', opacity: 0, transition: 'transform 0.15s ease-in, opacity 0.1s ease-in' };
@@ -202,17 +237,23 @@ export default function Home() {
               <TodayView
                 tasks={todayTasks}
                 onRefresh={handleRefresh}
+                onDetail={handleOpenDetail}
                 sekkiName={sekki.name}
                 sekkiDescription={sekki.description}
               />
             </div>
             <div className={activeTab === 'inbox' ? '' : 'hidden'}>
-              <InboxView tasks={inboxTasks} onRefresh={handleRefresh} />
+              <InboxView
+                tasks={inboxTasks}
+                onRefresh={handleRefresh}
+                onDetail={handleOpenDetail}
+              />
             </div>
             <div className={activeTab === 'calendar' ? '' : 'hidden'}>
               <CalendarView
                 tasks={calendarTasks}
                 onRefresh={handleRefresh}
+                onDetail={handleOpenDetail}
                 currentMonth={calendarMonth}
                 onMonthChange={setCalendarMonth}
               />
@@ -229,6 +270,15 @@ export default function Home() {
           />
         </div>
       </div>
+
+      {/* Task detail / edit bottom sheet */}
+      <TaskDetail
+        task={detailTask}
+        isOpen={!!detailTask}
+        onClose={handleCloseDetail}
+        onUpdate={handleUpdateTask}
+        onDelete={handleDeleteTask}
+      />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import BottomSheet from '@/components/BottomSheet';
 interface TodayViewProps {
   tasks: Task[];
   onRefresh: () => void;
+  onDetail: (task: Task) => void;
   sekkiName: string;
   sekkiDescription: string;
 }
@@ -21,10 +22,9 @@ const PRIORITY_ORDER: Record<string, number> = {
   none: 3,
 };
 
-export default function TodayView({ tasks, onRefresh, sekkiName, sekkiDescription }: TodayViewProps) {
+export default function TodayView({ tasks, onRefresh, onDetail, sekkiName, sekkiDescription }: TodayViewProps) {
   const [confirmTask, setConfirmTask] = useState<Task | null>(null);
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
-  const [detailTask, setDetailTask] = useState<Task | null>(null);
 
   // Separate overdue from today tasks, sort appropriately
   const sortedTasks = useMemo(() => {
@@ -99,13 +99,8 @@ export default function TodayView({ tasks, onRefresh, sekkiName, sekkiDescriptio
   }, [confirmTask, onRefresh]);
 
   const handleDetail = useCallback((task: Task) => {
-    setDetailTask(task);
-    // TaskDetail is handled by parent; for now emit an event
-    // Parent component should handle onDetail via a callback
-    // This is a placeholder; real detail opens TaskDetail
-    void task;
-    setDetailTask(null);
-  }, []);
+    onDetail(task);
+  }, [onDetail]);
 
   return (
     <div className="flex flex-col gap-4 px-4 pb-24 pt-2">

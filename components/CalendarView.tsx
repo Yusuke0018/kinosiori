@@ -8,6 +8,7 @@ import TaskCard from '@/components/TaskCard';
 interface CalendarViewProps {
   tasks: Task[];
   onRefresh: () => void;
+  onDetail: (task: Task) => void;
   currentMonth: string;             // "YYYY-MM" format, controlled by parent for data fetching
   onMonthChange: (month: string) => void;
 }
@@ -119,7 +120,7 @@ function getMonthGrid(year: number, month: number, tasks: Task[]): DayCell[] {
   return cells;
 }
 
-export default function CalendarView({ tasks, onRefresh, currentMonth, onMonthChange }: CalendarViewProps) {
+export default function CalendarView({ tasks, onRefresh, onDetail, currentMonth, onMonthChange }: CalendarViewProps) {
   const [viewYear, viewMonth] = useMemo(() => parseYearMonth(currentMonth), [currentMonth]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
@@ -280,7 +281,7 @@ export default function CalendarView({ tasks, onRefresh, currentMonth, onMonthCh
                 key={task.id}
                 task={task}
                 onComplete={() => {}}
-                onDetail={() => {}}
+                onDetail={onDetail}
               />
             ))
           )}
