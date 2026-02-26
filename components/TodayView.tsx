@@ -111,12 +111,12 @@ export default function TodayView({ tasks, onRefresh, sekkiName, sekkiDescriptio
     <div className="flex flex-col gap-4 px-4 pb-24 pt-2">
       {/* Header */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-[20px] font-semibold text-[#1A1A2E]">{displayGreeting}</h1>
+        <h1 className="text-[22px] font-bold text-[#1A1A2E] drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">{displayGreeting}</h1>
         {sekkiName && (
-          <p className="text-[13px] text-[#6B6B80]">
+          <p className="text-[13px] font-medium text-[#4A4A5E] drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
             {sekkiName}
             {sekkiDescription && (
-              <span className="text-[#9999AA]"> ─ {sekkiDescription}</span>
+              <span className="text-[#5A5A70]"> ─ {sekkiDescription}</span>
             )}
           </p>
         )}

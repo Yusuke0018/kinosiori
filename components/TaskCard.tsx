@@ -34,7 +34,7 @@ export default function TaskCard({ task, onComplete, onDetail, isRemoving = fals
   return (
     <div
       className={cn(
-        'relative flex items-stretch gap-0 rounded-2xl border bg-white/65 backdrop-blur-[20px] shadow-[0_4px_24px_var(--sekki-shadow-color)] transition-all duration-300',
+        'relative flex items-stretch gap-0 rounded-2xl border bg-white/85 backdrop-blur-[20px] shadow-[0_4px_24px_var(--sekki-shadow-color)] transition-all duration-300',
         'border-[var(--sekki-border-color)]',
         !mounted && 'translate-x-8 opacity-0',
         mounted && !isRemoving && 'translate-x-0 opacity-100',

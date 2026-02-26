@@ -111,7 +111,7 @@ export default function QuickInput({ onAdd }: QuickInputProps) {
             onChange={e => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-[15px] text-[#1A1A2E] placeholder-[#9999AA] outline-none backdrop-blur-sm transition-colors focus:border-[#F2724B]/40 focus:ring-2 focus:ring-[#F2724B]/10"
+            className="w-full rounded-xl border border-gray-200/80 bg-white/90 px-4 py-3 text-[15px] text-[#1A1A2E] placeholder-[#9999AA] outline-none backdrop-blur-md transition-colors focus:border-[#F2724B]/40 focus:ring-2 focus:ring-[#F2724B]/10"
           />
         </div>
         <button

@@ -99,6 +99,13 @@ export default function Home() {
     <div className="min-h-dvh relative overflow-hidden">
       <SeasonalBackground />
 
+      {/* Frosted overlay for text readability */}
+      <div
+        className="fixed inset-0 z-[5] pointer-events-none"
+        style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.25) 40%, rgba(255,255,255,0.35) 100%)' }}
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 flex flex-col min-h-dvh">
         <div className="shrink-0">
           <QuickInput onAdd={handleAdd} />

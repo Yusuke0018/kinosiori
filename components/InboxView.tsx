@@ -78,7 +78,7 @@ export default function InboxView({ tasks, onRefresh }: InboxViewProps) {
 
   return (
     <div className="flex flex-col gap-2 px-4 pb-24 pt-2">
-      <h2 className="mb-1 text-[13px] font-medium text-[#6B6B80]">
+      <h2 className="mb-1 text-[14px] font-semibold text-[#4A4A5E] drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
         未整理のタスク ({inboxTasks.length})
       </h2>
 

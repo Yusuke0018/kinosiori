@@ -74,15 +74,15 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "春の気配が立ち始める頃",
     startMonth: 2,
     startDay: 4,
-    bgGradient: ["#8B9DC3", "#6B7FA0", 160],
+    bgGradient: ["#D8DDE8", "#C8D0E0", 160],
     animationType: "breath",
     animationParams: {
       pulsePeriod: 4000,
       intensity: 0.3,
       scale: [0.98, 1.02],
     },
-    cardBorderColor: "rgba(255,182,193,0.15)",
-    cardShadowColor: "rgba(139,157,195,0.25)",
+    cardBorderColor: "rgba(200,190,220,0.18)",
+    cardShadowColor: "rgba(180,170,200,0.12)",
   },
   {
     name: "雨水",
@@ -90,7 +90,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "雪が雨に変わり、氷が溶け始める頃",
     startMonth: 2,
     startDay: 19,
-    bgGradient: ["#9B8FB4", "#7D7399", 160],
+    bgGradient: ["#DDD6E8", "#CFC5DD", 160],
     animationType: "particle",
     animationParams: {
       variant: "rain",
@@ -99,8 +99,8 @@ export const SEKKI_DATA: SekkiData[] = [
       size: [1, 3],
       opacity: [0.2, 0.5],
     },
-    cardBorderColor: "rgba(155,143,180,0.15)",
-    cardShadowColor: "rgba(125,115,153,0.25)",
+    cardBorderColor: "rgba(190,180,210,0.18)",
+    cardShadowColor: "rgba(170,160,195,0.12)",
   },
   {
     name: "啓蟄",
@@ -108,7 +108,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "冬眠していた虫たちが目を覚ます頃",
     startMonth: 3,
     startDay: 5,
-    bgGradient: ["#A8988A", "#C8B8A0", 160],
+    bgGradient: ["#E8E0D6", "#F0E8D8", 160],
     animationType: "breath",
     animationParams: {
       pulsePeriod: 5000,
@@ -116,8 +116,8 @@ export const SEKKI_DATA: SekkiData[] = [
       scale: [0.97, 1.03],
       sway: 2,
     },
-    cardBorderColor: "rgba(168,152,138,0.15)",
-    cardShadowColor: "rgba(200,184,160,0.25)",
+    cardBorderColor: "rgba(200,190,170,0.18)",
+    cardShadowColor: "rgba(180,170,150,0.12)",
   },
   {
     name: "春分",
@@ -125,7 +125,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "昼と夜の長さがほぼ等しくなる頃",
     startMonth: 3,
     startDay: 20,
-    bgGradient: ["#D4B8A0", "#E8C8B8", 150],
+    bgGradient: ["#F0E0D4", "#F5E8DE", 150],
     animationType: "flare",
     animationParams: {
       intensity: 0.5,
@@ -133,8 +133,8 @@ export const SEKKI_DATA: SekkiData[] = [
       pulsePeriod: 3000,
       opacity: [0.15, 0.4],
     },
-    cardBorderColor: "rgba(212,184,160,0.15)",
-    cardShadowColor: "rgba(232,200,184,0.25)",
+    cardBorderColor: "rgba(220,200,180,0.18)",
+    cardShadowColor: "rgba(200,180,160,0.12)",
   },
   {
     name: "清明",
@@ -142,7 +142,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "すべてのものが清らかで生き生きする頃",
     startMonth: 4,
     startDay: 4,
-    bgGradient: ["#F5C6D0", "#FDDDE6", 160],
+    bgGradient: ["#F8E0E6", "#FDE8EF", 160],
     animationType: "particle",
     animationParams: {
       variant: "sakura",
@@ -153,7 +153,7 @@ export const SEKKI_DATA: SekkiData[] = [
       sway: 4,
     },
     cardBorderColor: "rgba(245,198,208,0.2)",
-    cardShadowColor: "rgba(253,221,230,0.3)",
+    cardShadowColor: "rgba(240,200,215,0.15)",
   },
   {
     name: "穀雨",
@@ -161,7 +161,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "穀物を潤す春の雨が降る頃",
     startMonth: 4,
     startDay: 20,
-    bgGradient: ["#A8D8A8", "#C8E8B8", 150],
+    bgGradient: ["#D8EED8", "#E4F4DC", 150],
     animationType: "particle",
     animationParams: {
       variant: "gold",
@@ -171,8 +171,8 @@ export const SEKKI_DATA: SekkiData[] = [
       opacity: [0.3, 0.7],
       sway: 2,
     },
-    cardBorderColor: "rgba(168,216,168,0.15)",
-    cardShadowColor: "rgba(200,232,184,0.25)",
+    cardBorderColor: "rgba(180,220,180,0.18)",
+    cardShadowColor: "rgba(160,200,160,0.12)",
   },
 
   // ── 夏 Summer ──────────────────────────────────────────────
@@ -182,7 +182,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "夏の気配が立ち始める頃",
     startMonth: 5,
     startDay: 5,
-    bgGradient: ["#A0D8D0", "#B8E8E0", 140],
+    bgGradient: ["#D4EEE8", "#DEF4F0", 140],
     animationType: "wave",
     animationParams: {
       frequency: 0.02,
@@ -190,8 +190,8 @@ export const SEKKI_DATA: SekkiData[] = [
       speed: 1.0,
       opacity: [0.1, 0.3],
     },
-    cardBorderColor: "rgba(160,216,208,0.15)",
-    cardShadowColor: "rgba(184,232,224,0.25)",
+    cardBorderColor: "rgba(180,220,215,0.18)",
+    cardShadowColor: "rgba(160,200,195,0.12)",
   },
   {
     name: "小満",
@@ -199,15 +199,15 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "草木が茂り、万物が満ち始める頃",
     startMonth: 5,
     startDay: 21,
-    bgGradient: ["#6DB070", "#88C488", 160],
+    bgGradient: ["#C8E8C8", "#D8F0D8", 160],
     animationType: "breath",
     animationParams: {
       pulsePeriod: 4500,
       intensity: 0.3,
       scale: [0.98, 1.02],
     },
-    cardBorderColor: "rgba(109,176,112,0.15)",
-    cardShadowColor: "rgba(136,196,136,0.25)",
+    cardBorderColor: "rgba(170,210,170,0.18)",
+    cardShadowColor: "rgba(150,190,150,0.12)",
   },
   {
     name: "芒種",
@@ -215,7 +215,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "稲や麦などの種を蒔く頃",
     startMonth: 6,
     startDay: 5,
-    bgGradient: ["#8BA898", "#A0B8A8", 170],
+    bgGradient: ["#D4E0D8", "#DEE8DE", 170],
     animationType: "particle",
     animationParams: {
       variant: "rain",
@@ -224,8 +224,8 @@ export const SEKKI_DATA: SekkiData[] = [
       size: [1, 2],
       opacity: [0.15, 0.4],
     },
-    cardBorderColor: "rgba(139,168,152,0.15)",
-    cardShadowColor: "rgba(160,184,168,0.25)",
+    cardBorderColor: "rgba(180,200,185,0.18)",
+    cardShadowColor: "rgba(160,180,165,0.12)",
   },
   {
     name: "夏至",
@@ -233,7 +233,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "一年で最も昼が長くなる頃",
     startMonth: 6,
     startDay: 21,
-    bgGradient: ["#8898A8", "#A0A8B8", 170],
+    bgGradient: ["#D4DAE4", "#DEE2EC", 170],
     animationType: "particle",
     animationParams: {
       variant: "rain",
@@ -242,8 +242,8 @@ export const SEKKI_DATA: SekkiData[] = [
       size: [1, 3],
       opacity: [0.2, 0.5],
     },
-    cardBorderColor: "rgba(136,152,168,0.15)",
-    cardShadowColor: "rgba(160,168,184,0.25)",
+    cardBorderColor: "rgba(185,190,205,0.18)",
+    cardShadowColor: "rgba(165,170,185,0.12)",
   },
   {
     name: "小暑",
@@ -251,7 +251,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "暑さが本格的になり始める頃",
     startMonth: 7,
     startDay: 7,
-    bgGradient: ["#F0A830", "#F8C040", 140],
+    bgGradient: ["#F8E0C0", "#FCE8D0", 140],
     animationType: "heatHaze",
     animationParams: {
       intensity: 0.6,
@@ -259,8 +259,8 @@ export const SEKKI_DATA: SekkiData[] = [
       frequency: 0.03,
       amplitude: 8,
     },
-    cardBorderColor: "rgba(240,168,48,0.15)",
-    cardShadowColor: "rgba(248,192,64,0.25)",
+    cardBorderColor: "rgba(230,200,160,0.18)",
+    cardShadowColor: "rgba(210,180,140,0.12)",
   },
   {
     name: "大暑",
@@ -268,7 +268,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "一年で最も暑さが厳しい頃",
     startMonth: 7,
     startDay: 22,
-    bgGradient: ["#E88020", "#F09830", 140],
+    bgGradient: ["#F8D8B8", "#FCE0C8", 140],
     animationType: "heatHaze",
     animationParams: {
       intensity: 0.8,
@@ -276,8 +276,8 @@ export const SEKKI_DATA: SekkiData[] = [
       frequency: 0.04,
       amplitude: 12,
     },
-    cardBorderColor: "rgba(232,128,32,0.15)",
-    cardShadowColor: "rgba(240,152,48,0.25)",
+    cardBorderColor: "rgba(230,190,150,0.18)",
+    cardShadowColor: "rgba(210,170,130,0.12)",
   },
 
   // ── 秋 Autumn ──────────────────────────────────────────────
@@ -287,7 +287,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "秋の気配が立ち始める頃",
     startMonth: 8,
     startDay: 7,
-    bgGradient: ["#E89060", "#F0A870", 150],
+    bgGradient: ["#F8DCC8", "#FCE4D4", 150],
     animationType: "heatHaze",
     animationParams: {
       intensity: 0.4,
@@ -295,8 +295,8 @@ export const SEKKI_DATA: SekkiData[] = [
       frequency: 0.02,
       amplitude: 6,
     },
-    cardBorderColor: "rgba(232,144,96,0.15)",
-    cardShadowColor: "rgba(240,168,112,0.25)",
+    cardBorderColor: "rgba(230,195,165,0.18)",
+    cardShadowColor: "rgba(210,175,145,0.12)",
   },
   {
     name: "処暑",
@@ -304,7 +304,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "暑さが和らぎ始める頃",
     startMonth: 8,
     startDay: 23,
-    bgGradient: ["#D8A080", "#E8B898", 155],
+    bgGradient: ["#F0DCD0", "#F6E4DA", 155],
     animationType: "particle",
     animationParams: {
       variant: "dust",
@@ -314,8 +314,8 @@ export const SEKKI_DATA: SekkiData[] = [
       opacity: [0.15, 0.35],
       sway: 3,
     },
-    cardBorderColor: "rgba(216,160,128,0.15)",
-    cardShadowColor: "rgba(232,184,152,0.25)",
+    cardBorderColor: "rgba(220,195,175,0.18)",
+    cardShadowColor: "rgba(200,175,155,0.12)",
   },
   {
     name: "白露",
@@ -323,7 +323,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "草花に朝露が宿り始める頃",
     startMonth: 9,
     startDay: 7,
-    bgGradient: ["#D8D0C8", "#E8E0D8", 150],
+    bgGradient: ["#EDE8E4", "#F4F0EC", 150],
     animationType: "flare",
     animationParams: {
       variant: "sparkle",
@@ -333,8 +333,8 @@ export const SEKKI_DATA: SekkiData[] = [
       count: 15,
       opacity: [0.2, 0.6],
     },
-    cardBorderColor: "rgba(216,208,200,0.15)",
-    cardShadowColor: "rgba(232,224,216,0.25)",
+    cardBorderColor: "rgba(210,205,200,0.18)",
+    cardShadowColor: "rgba(190,185,180,0.12)",
   },
   {
     name: "秋分",
@@ -342,7 +342,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "昼と夜の長さがほぼ等しくなる頃",
     startMonth: 9,
     startDay: 22,
-    bgGradient: ["#B8A890", "#D0B898", 160],
+    bgGradient: ["#E4DCD0", "#ECE4D8", 160],
     animationType: "wave",
     animationParams: {
       frequency: 0.015,
@@ -350,8 +350,8 @@ export const SEKKI_DATA: SekkiData[] = [
       speed: 0.7,
       opacity: [0.1, 0.25],
     },
-    cardBorderColor: "rgba(184,168,144,0.15)",
-    cardShadowColor: "rgba(208,184,152,0.25)",
+    cardBorderColor: "rgba(205,195,180,0.18)",
+    cardShadowColor: "rgba(185,175,160,0.12)",
   },
   {
     name: "寒露",
@@ -359,7 +359,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "露が冷たく感じられる頃",
     startMonth: 10,
     startDay: 8,
-    bgGradient: ["#D4A830", "#E8C040", 145],
+    bgGradient: ["#F0E0C0", "#F6E8CE", 145],
     animationType: "particle",
     animationParams: {
       variant: "kinmokusei",
@@ -369,8 +369,8 @@ export const SEKKI_DATA: SekkiData[] = [
       opacity: [0.4, 0.8],
       sway: 5,
     },
-    cardBorderColor: "rgba(212,168,48,0.2)",
-    cardShadowColor: "rgba(232,192,64,0.3)",
+    cardBorderColor: "rgba(220,200,160,0.2)",
+    cardShadowColor: "rgba(200,180,140,0.15)",
   },
   {
     name: "霜降",
@@ -378,7 +378,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "霜が降り始める頃",
     startMonth: 10,
     startDay: 23,
-    bgGradient: ["#A03040", "#B84858", 160],
+    bgGradient: ["#E8CCD0", "#F0D8DC", 160],
     animationType: "particle",
     animationParams: {
       variant: "leaves",
@@ -388,8 +388,8 @@ export const SEKKI_DATA: SekkiData[] = [
       opacity: [0.4, 0.7],
       sway: 6,
     },
-    cardBorderColor: "rgba(160,48,64,0.15)",
-    cardShadowColor: "rgba(184,72,88,0.25)",
+    cardBorderColor: "rgba(210,175,180,0.18)",
+    cardShadowColor: "rgba(190,155,160,0.12)",
   },
 
   // ── 冬 Winter ──────────────────────────────────────────────
@@ -399,7 +399,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "冬の気配が立ち始める頃",
     startMonth: 11,
     startDay: 7,
-    bgGradient: ["#8B5060", "#A06878", 160],
+    bgGradient: ["#E0D0D6", "#E8DAE0", 160],
     animationType: "particle",
     animationParams: {
       variant: "dust",
@@ -408,8 +408,8 @@ export const SEKKI_DATA: SekkiData[] = [
       size: [2, 4],
       opacity: [0.1, 0.3],
     },
-    cardBorderColor: "rgba(139,80,96,0.15)",
-    cardShadowColor: "rgba(160,104,120,0.25)",
+    cardBorderColor: "rgba(200,180,190,0.18)",
+    cardShadowColor: "rgba(180,160,170,0.12)",
   },
   {
     name: "小雪",
@@ -417,7 +417,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "わずかに雪が降り始める頃",
     startMonth: 11,
     startDay: 22,
-    bgGradient: ["#708090", "#8898A8", 165],
+    bgGradient: ["#D8DEE4", "#E2E8EE", 165],
     animationType: "particle",
     animationParams: {
       variant: "snow",
@@ -427,8 +427,8 @@ export const SEKKI_DATA: SekkiData[] = [
       opacity: [0.3, 0.6],
       sway: 3,
     },
-    cardBorderColor: "rgba(112,128,144,0.15)",
-    cardShadowColor: "rgba(136,152,168,0.25)",
+    cardBorderColor: "rgba(190,200,210,0.18)",
+    cardShadowColor: "rgba(170,180,190,0.12)",
   },
   {
     name: "大雪",
@@ -436,7 +436,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "本格的に雪が降り積もる頃",
     startMonth: 12,
     startDay: 7,
-    bgGradient: ["#6878A0", "#8090B0", 170],
+    bgGradient: ["#D0D8E8", "#DAE2F0", 170],
     animationType: "particle",
     animationParams: {
       variant: "snow",
@@ -446,8 +446,8 @@ export const SEKKI_DATA: SekkiData[] = [
       opacity: [0.4, 0.8],
       sway: 4,
     },
-    cardBorderColor: "rgba(104,120,160,0.15)",
-    cardShadowColor: "rgba(128,144,176,0.25)",
+    cardBorderColor: "rgba(180,190,210,0.18)",
+    cardShadowColor: "rgba(160,170,190,0.12)",
   },
   {
     name: "冬至",
@@ -455,7 +455,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "一年で最も夜が長くなる頃",
     startMonth: 12,
     startDay: 21,
-    bgGradient: ["#1A2040", "#283058", 180],
+    bgGradient: ["#C8D0E0", "#D4DCE8", 180],
     animationType: "particle",
     animationParams: {
       variant: "stars",
@@ -465,8 +465,8 @@ export const SEKKI_DATA: SekkiData[] = [
       opacity: [0.3, 0.9],
       sway: 1,
     },
-    cardBorderColor: "rgba(26,32,64,0.15)",
-    cardShadowColor: "rgba(40,48,88,0.3)",
+    cardBorderColor: "rgba(180,190,210,0.18)",
+    cardShadowColor: "rgba(160,170,195,0.12)",
   },
   {
     name: "小寒",
@@ -474,7 +474,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "寒さが一段と厳しくなる頃",
     startMonth: 1,
     startDay: 5,
-    bgGradient: ["#B0C8E0", "#C8D8F0", 170],
+    bgGradient: ["#DCE6F0", "#E6EEF6", 170],
     animationType: "crystal",
     animationParams: {
       count: 20,
@@ -484,8 +484,8 @@ export const SEKKI_DATA: SekkiData[] = [
       glow: 30,
       pulsePeriod: 3500,
     },
-    cardBorderColor: "rgba(176,200,224,0.15)",
-    cardShadowColor: "rgba(200,216,240,0.25)",
+    cardBorderColor: "rgba(195,210,225,0.18)",
+    cardShadowColor: "rgba(175,190,205,0.12)",
   },
   {
     name: "大寒",
@@ -493,7 +493,7 @@ export const SEKKI_DATA: SekkiData[] = [
     description: "一年で最も寒さが厳しい頃",
     startMonth: 1,
     startDay: 20,
-    bgGradient: ["#D8E0E8", "#E8EFF5", 170],
+    bgGradient: ["#E8EDF2", "#F0F4F8", 170],
     animationType: "crystal",
     animationParams: {
       count: 30,
@@ -503,8 +503,8 @@ export const SEKKI_DATA: SekkiData[] = [
       glow: 40,
       pulsePeriod: 4000,
     },
-    cardBorderColor: "rgba(216,224,232,0.15)",
-    cardShadowColor: "rgba(232,239,245,0.25)",
+    cardBorderColor: "rgba(210,218,228,0.18)",
+    cardShadowColor: "rgba(190,198,210,0.12)",
   },
 ];
 

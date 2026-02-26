@@ -187,7 +187,7 @@ export default function CalendarView({ tasks, onRefresh, currentMonth, onMonthCh
         </button>
 
         <div className="flex items-center gap-3">
-          <h2 className="text-[16px] font-semibold text-[#1A1A2E]">{monthLabel}</h2>
+          <h2 className="text-[17px] font-bold text-[#1A1A2E] drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">{monthLabel}</h2>
           <button
             onClick={goToToday}
             className="rounded-md bg-gray-100 px-2 py-1 text-[11px] font-medium text-[#6B6B80] transition-colors hover:bg-gray-200"
@@ -236,10 +236,10 @@ export default function CalendarView({ tasks, onRefresh, currentMonth, onMonthCh
             >
               <span
                 className={cn(
-                  'flex h-7 w-7 items-center justify-center rounded-full text-[13px] font-medium',
-                  cell.isToday && 'bg-[#F2724B] text-white',
-                  !cell.isToday && cell.isCurrentMonth && 'text-[#1A1A2E]',
-                  !cell.isToday && !cell.isCurrentMonth && 'text-[#9999AA]',
+                  'flex h-7 w-7 items-center justify-center rounded-full text-[13px] font-semibold',
+                  cell.isToday && 'bg-[#F2724B] text-white shadow-sm',
+                  !cell.isToday && cell.isCurrentMonth && 'text-[#2A2A3E]',
+                  !cell.isToday && !cell.isCurrentMonth && 'text-[#AAAABC]',
                   isSelected && !cell.isToday && 'ring-1.5 ring-[#F2724B]/40'
                 )}
               >
