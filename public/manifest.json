@@ -1,6 +1,6 @@
 {
   "name": "季のしおり",
-  "short_name": "きしおり",
+  "short_name": "季のしおり",
   "description": "今日という日の景色を開く",
   "start_url": "/",
   "display": "standalone",
@@ -9,14 +9,27 @@
   "orientation": "portrait",
   "icons": [
     {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
       "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

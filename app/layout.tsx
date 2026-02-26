@@ -20,6 +20,18 @@ export const metadata: Metadata = {
   title: "季のしおり",
   description: "今日という日の景色を開く ── 二十四節気TODOアプリ",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "季のしおり",
+  },
 };
 
 export const viewport: Viewport = {
