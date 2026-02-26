@@ -36,7 +36,27 @@ export default function QuickInput({ onAdd }: QuickInputProps) {
 
   useEffect(() => {
     setPlaceholder(getPlaceholderByTime());
-    inputRef.current?.focus();
+
+    // Aggressive focus: try multiple times to raise keyboard
+    // Mobile browsers require user gesture, but PWA standalone mode
+    // and some Android browsers allow autoFocus on page load.
+    const tryFocus = () => {
+      if (inputRef.current) {
+        inputRef.current.focus({ preventScroll: false });
+        // Virtual Keyboard API (Chromium 94+)
+        if ('virtualKeyboard' in navigator) {
+          (navigator as unknown as { virtualKeyboard: { show: () => void } }).virtualKeyboard.show();
+        }
+      }
+    };
+
+    // Immediate attempt
+    tryFocus();
+    // Retry after paint
+    requestAnimationFrame(tryFocus);
+    // Retry after a short delay (helps on some Android browsers)
+    const t = setTimeout(tryFocus, 300);
+    return () => clearTimeout(t);
   }, []);
 
   const handleDateChip = useCallback((chip: 'inbox' | 'today' | 'tomorrow' | 'pick') => {
@@ -111,6 +131,8 @@ export default function QuickInput({ onAdd }: QuickInputProps) {
             onChange={e => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
+            autoFocus
+            enterKeyHint="done"
             className="w-full rounded-xl border border-gray-200/80 bg-white/90 px-4 py-3 text-[15px] text-[#1A1A2E] placeholder-[#9999AA] outline-none backdrop-blur-md transition-colors focus:border-[#F2724B]/40 focus:ring-2 focus:ring-[#F2724B]/10"
           />
         </div>
