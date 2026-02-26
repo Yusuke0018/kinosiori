@@ -36,8 +36,16 @@ export default function QuickInput({ onAdd }: QuickInputProps) {
 
   useEffect(() => {
     setPlaceholder(getPlaceholderByTime());
-    // Single focus call - this was working on Android before
-    inputRef.current?.focus();
+  }, []);
+
+  // Separate effect for focus - runs after all rendering is done
+  useEffect(() => {
+    // Small delay to ensure DOM is fully settled and no re-renders steal focus
+    const id = setTimeout(() => {
+      inputRef.current?.click();
+      inputRef.current?.focus();
+    }, 150);
+    return () => clearTimeout(id);
   }, []);
 
   const handleDateChip = useCallback((chip: 'inbox' | 'today' | 'tomorrow' | 'pick') => {
@@ -112,7 +120,6 @@ export default function QuickInput({ onAdd }: QuickInputProps) {
             onChange={e => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            autoFocus
             enterKeyHint="done"
             className="w-full rounded-xl border border-gray-200/80 bg-white/90 px-4 py-3 text-[15px] text-[#1A1A2E] placeholder-[#9999AA] outline-none backdrop-blur-md transition-colors focus:border-[#F2724B]/40 focus:ring-2 focus:ring-[#F2724B]/10"
           />
