@@ -36,27 +36,8 @@ export default function QuickInput({ onAdd }: QuickInputProps) {
 
   useEffect(() => {
     setPlaceholder(getPlaceholderByTime());
-
-    // Aggressive focus: try multiple times to raise keyboard
-    // Mobile browsers require user gesture, but PWA standalone mode
-    // and some Android browsers allow autoFocus on page load.
-    const tryFocus = () => {
-      if (inputRef.current) {
-        inputRef.current.focus({ preventScroll: false });
-        // Virtual Keyboard API (Chromium 94+)
-        if ('virtualKeyboard' in navigator) {
-          (navigator as unknown as { virtualKeyboard: { show: () => void } }).virtualKeyboard.show();
-        }
-      }
-    };
-
-    // Immediate attempt
-    tryFocus();
-    // Retry after paint
-    requestAnimationFrame(tryFocus);
-    // Retry after a short delay (helps on some Android browsers)
-    const t = setTimeout(tryFocus, 300);
-    return () => clearTimeout(t);
+    // Single focus call - this was working on Android before
+    inputRef.current?.focus();
   }, []);
 
   const handleDateChip = useCallback((chip: 'inbox' | 'today' | 'tomorrow' | 'pick') => {
