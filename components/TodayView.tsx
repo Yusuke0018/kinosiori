@@ -13,6 +13,7 @@ interface TodayViewProps {
   onDetail: (task: Task) => void;
   sekkiName: string;
   sekkiDescription: string;
+  totalCompleted: number;
 }
 
 const PRIORITY_ORDER: Record<string, number> = {
@@ -22,7 +23,7 @@ const PRIORITY_ORDER: Record<string, number> = {
   none: 3,
 };
 
-export default function TodayView({ tasks, onRefresh, onDetail, sekkiName, sekkiDescription }: TodayViewProps) {
+export default function TodayView({ tasks, onRefresh, onDetail, sekkiName, sekkiDescription, totalCompleted }: TodayViewProps) {
   const [confirmTask, setConfirmTask] = useState<Task | null>(null);
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
 
@@ -119,8 +120,13 @@ export default function TodayView({ tasks, onRefresh, onDetail, sekkiName, sekki
 
       {/* Progress ring */}
       {tasks.length > 0 && (
-        <div className="flex justify-center py-2">
+        <div className="flex flex-col items-center gap-1 py-2">
           <ProgressRing completed={completedCount} total={tasks.length} />
+          {totalCompleted > 0 && (
+            <p className="text-[12px] text-[#9999AA] mt-1">
+              これまでに {totalCompleted} つ、積み重ねてきました
+            </p>
+          )}
         </div>
       )}
 
@@ -138,6 +144,11 @@ export default function TodayView({ tasks, onRefresh, onDetail, sekkiName, sekki
             />
           </svg>
           <p className="text-[15px] text-[#9999AA]">今日のタスクはありません</p>
+          {totalCompleted > 0 && (
+            <p className="text-[12px] text-[#9999AA] mt-1">
+              これまでに {totalCompleted} つ、積み重ねてきました
+            </p>
+          )}
         </div>
       ) : (
         <div className="flex flex-col gap-2">

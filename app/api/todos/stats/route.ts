@@ -37,7 +37,15 @@ export async function GET() {
     const total = allTasks.length;
     const completed = allTasks.filter(t => t.done).length;
 
-    return NextResponse.json({ total, completed });
+    // 全期間の完了タスク累計
+    const { count: totalCompleted, error: totalErr } = await supabase
+      .from('todos')
+      .select('id', { count: 'exact', head: true })
+      .eq('done', true);
+
+    if (totalErr) throw totalErr;
+
+    return NextResponse.json({ total, completed, totalCompleted: totalCompleted ?? 0 });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Unknown error';
     return NextResponse.json({ error: message }, { status: 500 });

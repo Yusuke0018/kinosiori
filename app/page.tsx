@@ -24,6 +24,7 @@ export default function Home() {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
   });
+  const [totalCompleted, setTotalCompleted] = useState(0);
 
   // Task detail editing state
   const [detailTask, setDetailTask] = useState<Task | null>(null);
@@ -34,6 +35,18 @@ export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const sekki = getCurrentSekki(new Date());
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await fetch('/api/todos/stats');
+      if (res.ok) {
+        const data = await res.json();
+        setTotalCompleted(data.totalCompleted ?? 0);
+      }
+    } catch (e) {
+      console.error('Failed to fetch stats:', e);
+    }
+  }, []);
 
   const fetchTodayTasks = useCallback(async () => {
     try {
@@ -74,7 +87,8 @@ export default function Home() {
   useEffect(() => {
     fetchTodayTasks();
     fetchInboxTasks();
-  }, [fetchTodayTasks, fetchInboxTasks]);
+    fetchStats();
+  }, [fetchTodayTasks, fetchInboxTasks, fetchStats]);
 
   useEffect(() => {
     fetchCalendarTasks();
@@ -101,6 +115,7 @@ export default function Home() {
     fetchTodayTasks();
     fetchInboxTasks();
     fetchCalendarTasks();
+    fetchStats();
   };
 
   // Task detail handlers
@@ -240,6 +255,7 @@ export default function Home() {
                 onDetail={handleOpenDetail}
                 sekkiName={sekki.name}
                 sekkiDescription={sekki.description}
+                totalCompleted={totalCompleted}
               />
             </div>
             <div className={activeTab === 'inbox' ? '' : 'hidden'}>
