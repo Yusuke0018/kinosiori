@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from 'react';
 import type { Task } from '@/lib/types';
 import { formatDate, cn } from '@/lib/utils';
 import TaskCard from '@/components/TaskCard';
+import BottomSheet from '@/components/BottomSheet';
 
 interface InboxViewProps {
   tasks: Task[];
@@ -20,6 +21,8 @@ const PRIORITY_ORDER: Record<string, number> = {
 
 export default function InboxView({ tasks, onRefresh, onDetail }: InboxViewProps) {
   const [movingIds, setMovingIds] = useState<Set<string>>(new Set());
+  const [confirmTask, setConfirmTask] = useState<Task | null>(null);
+  const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
 
   // Only show inbox tasks: date is null and not done
   const inboxTasks = useMemo(() => {
@@ -64,6 +67,39 @@ export default function InboxView({ tasks, onRefresh, onDetail }: InboxViewProps
     [onRefresh]
   );
 
+  const handleCompleteClick = useCallback((task: Task) => {
+    if (task.done) return;
+    setConfirmTask(task);
+  }, []);
+
+  const handleConfirmComplete = useCallback(async () => {
+    if (!confirmTask) return;
+    try {
+      setRemovingIds(prev => new Set(prev).add(confirmTask.id));
+      await fetch(`/api/todos/${confirmTask.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ done: true, done_at: new Date().toISOString() }),
+      });
+      setTimeout(() => {
+        setRemovingIds(prev => {
+          const next = new Set(prev);
+          next.delete(confirmTask.id);
+          return next;
+        });
+        onRefresh();
+      }, 400);
+    } catch (err) {
+      console.error('Failed to complete task:', err);
+      setRemovingIds(prev => {
+        const next = new Set(prev);
+        next.delete(confirmTask.id);
+        return next;
+      });
+    }
+    setConfirmTask(null);
+  }, [confirmTask, onRefresh]);
+
   const handleDetail = useCallback((task: Task) => {
     onDetail(task);
   }, [onDetail]);
@@ -94,9 +130,9 @@ export default function InboxView({ tasks, onRefresh, onDetail }: InboxViewProps
           <div className="relative">
             <TaskCard
               task={task}
-              onComplete={() => {}}
+              onComplete={handleCompleteClick}
               onDetail={handleDetail}
-              isRemoving={movingIds.has(task.id)}
+              isRemoving={movingIds.has(task.id) || removingIds.has(task.id)}
             />
             {/* "今日やる" button overlay */}
             <button
@@ -109,6 +145,19 @@ export default function InboxView({ tasks, onRefresh, onDetail }: InboxViewProps
           </div>
         </div>
       ))}
+
+      <BottomSheet
+        isOpen={!!confirmTask}
+        onClose={() => setConfirmTask(null)}
+        title="タスクを完了にしますか？"
+        message={confirmTask?.text}
+        actions={[
+          {
+            label: '完了にする',
+            onClick: handleConfirmComplete,
+          },
+        ]}
+      />
     </div>
   );
 }

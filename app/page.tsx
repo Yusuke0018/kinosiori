@@ -238,9 +238,11 @@ export default function Home() {
       />
 
       <div className="relative z-10 flex flex-col min-h-dvh">
-        <div className="shrink-0">
-          <QuickInput onAdd={handleAdd} />
-        </div>
+        {activeTab === 'inbox' && (
+          <div className="shrink-0">
+            <QuickInput onAdd={handleAdd} />
+          </div>
+        )}
 
         <div
           ref={contentRef}
