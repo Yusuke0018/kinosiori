@@ -11,6 +11,7 @@ import TaskDetail from '@/components/TaskDetail';
 import SeasonalBackground from '@/components/seasonal/SeasonalBackground';
 import { getCurrentSekki } from '@/lib/sekki';
 import { useSwipe } from '@/lib/useSwipe';
+import { formatDate } from '@/lib/utils';
 
 const TABS = ['today', 'inbox', 'calendar'] as const;
 type TabType = (typeof TABS)[number];
@@ -50,10 +51,11 @@ export default function Home() {
 
   const fetchTodayTasks = useCallback(async () => {
     try {
-      const res = await fetch('/api/todos?filter=today&include_overdue=true');
+      const clientToday = formatDate(new Date());
+      const res = await fetch(`/api/todos?filter=today&include_overdue=true&client_today=${clientToday}`);
       if (res.ok) {
         const data = await res.json();
-        setTodayTasks(data.filter((t: Task) => !t.done));
+        setTodayTasks(data);
       }
     } catch (e) {
       console.error('Failed to fetch today tasks:', e);

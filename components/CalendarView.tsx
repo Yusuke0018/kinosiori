@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import type { Task } from '@/lib/types';
 import { formatDate, cn } from '@/lib/utils';
 import TaskCard from '@/components/TaskCard';
+import BottomSheet from '@/components/BottomSheet';
 
 interface CalendarViewProps {
   tasks: Task[];
@@ -123,6 +124,8 @@ function getMonthGrid(year: number, month: number, tasks: Task[]): DayCell[] {
 export default function CalendarView({ tasks, onRefresh, onDetail, currentMonth, onMonthChange }: CalendarViewProps) {
   const [viewYear, viewMonth] = useMemo(() => parseYearMonth(currentMonth), [currentMonth]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [confirmTask, setConfirmTask] = useState<Task | null>(null);
+  const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
 
   const monthLabel = useMemo(() => {
     return `${viewYear}年${viewMonth + 1}月`;
@@ -172,6 +175,39 @@ export default function CalendarView({ tasks, onRefresh, onDetail, currentMonth,
   const handleDayClick = useCallback((cell: DayCell) => {
     setSelectedDate(prev => (prev === cell.dateStr ? null : cell.dateStr));
   }, []);
+
+  const handleCompleteClick = useCallback((task: Task) => {
+    if (task.done) return;
+    setConfirmTask(task);
+  }, []);
+
+  const handleConfirmComplete = useCallback(async () => {
+    if (!confirmTask) return;
+    try {
+      setRemovingIds(prev => new Set(prev).add(confirmTask.id));
+      await fetch(`/api/todos/${confirmTask.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ done: true, done_at: new Date().toISOString() }),
+      });
+      setTimeout(() => {
+        setRemovingIds(prev => {
+          const next = new Set(prev);
+          next.delete(confirmTask.id);
+          return next;
+        });
+        onRefresh();
+      }, 400);
+    } catch (err) {
+      console.error('Failed to complete task:', err);
+      setRemovingIds(prev => {
+        const next = new Set(prev);
+        next.delete(confirmTask.id);
+        return next;
+      });
+    }
+    setConfirmTask(null);
+  }, [confirmTask, onRefresh]);
 
   return (
     <div className="flex flex-col gap-3 px-4 pb-24 pt-2">
@@ -280,13 +316,28 @@ export default function CalendarView({ tasks, onRefresh, onDetail, currentMonth,
               <TaskCard
                 key={task.id}
                 task={task}
-                onComplete={() => {}}
+                onComplete={handleCompleteClick}
                 onDetail={onDetail}
+                isRemoving={removingIds.has(task.id)}
               />
             ))
           )}
         </div>
       )}
+
+      {/* Completion confirmation sheet */}
+      <BottomSheet
+        isOpen={!!confirmTask}
+        onClose={() => setConfirmTask(null)}
+        title="タスクを完了にしますか？"
+        message={confirmTask?.text}
+        actions={[
+          {
+            label: '完了にする',
+            onClick: handleConfirmComplete,
+          },
+        ]}
+      />
     </div>
   );
 }

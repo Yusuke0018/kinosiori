@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     let query = supabase.from('todos').select('*');
 
     if (filter === 'today') {
-      const today = todayStr();
+      const today = searchParams.get('client_today') || todayStr();
       if (includeOverdue) {
         query = query
           .eq('done', false)
