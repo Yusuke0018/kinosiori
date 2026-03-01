@@ -105,6 +105,22 @@ export default function Home() {
         fetchTodayTasks();
         fetchInboxTasks();
         fetchCalendarTasks();
+
+        // タスク追加先のタブに自動切り替え
+        if (date === null) {
+          setActiveTab('inbox');
+        } else {
+          const today = new Date();
+          const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+          if (date === todayStr) {
+            setActiveTab('today');
+          } else {
+            // 明日や日付指定 → カレンダーに切り替え＆該当月を表示
+            const taskMonth = date.slice(0, 7); // "YYYY-MM"
+            setCalendarMonth(taskMonth);
+            setActiveTab('calendar');
+          }
+        }
       }
     } catch (e) {
       console.error('Failed to add task:', e);
