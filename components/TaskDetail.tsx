@@ -23,23 +23,13 @@ const PRIORITIES: { value: Priority; label: string; color: string }[] = [
 ];
 
 export default function TaskDetail({ task, isOpen, onClose, onUpdate, onDelete }: TaskDetailProps) {
-  const [text, setText] = useState('');
-  const [priority, setPriority] = useState<Priority>('none');
-  const [date, setDate] = useState<string | null>(null);
+  const [text, setText] = useState(() => task?.text ?? '');
+  const [priority, setPriority] = useState<Priority>(() => task?.priority ?? 'none');
+  const [date, setDate] = useState<string | null>(() => task?.date ?? null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const datePickerRef = useRef<HTMLInputElement>(null);
-
-  // Sync state when task changes
-  useEffect(() => {
-    if (task) {
-      setText(task.text);
-      setPriority(task.priority);
-      setDate(task.date);
-      setHasChanges(false);
-    }
-  }, [task]);
 
   // Auto-resize textarea
   useEffect(() => {

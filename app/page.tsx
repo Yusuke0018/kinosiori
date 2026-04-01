@@ -6,10 +6,18 @@ import QuickInput from '@/components/QuickInput';
 import TodayView from '@/components/TodayView';
 import InboxView from '@/components/InboxView';
 import CalendarView from '@/components/CalendarView';
+import NotificationPermissionCard from '@/components/NotificationPermissionCard';
 import TabNav from '@/components/TabNav';
 import TaskDetail from '@/components/TaskDetail';
 import SeasonalBackground from '@/components/seasonal/SeasonalBackground';
 import { getCurrentSekki } from '@/lib/sekki';
+import {
+  getNotificationPermissionState,
+  isStandaloneDisplay,
+  registerTaskBadgeServiceWorker,
+  requestTaskBadgePermission,
+  syncTodayTaskBadge,
+} from '@/lib/taskBadge';
 import { useSwipe } from '@/lib/useSwipe';
 import { formatDate } from '@/lib/utils';
 
@@ -21,6 +29,11 @@ export default function Home() {
   const [todayTasks, setTodayTasks] = useState<Task[]>([]);
   const [inboxTasks, setInboxTasks] = useState<Task[]>([]);
   const [calendarTasks, setCalendarTasks] = useState<Task[]>([]);
+  const [notificationPermission, setNotificationPermission] = useState<
+    NotificationPermission | 'unsupported'
+  >('unsupported');
+  const [isRequestingNotification, setIsRequestingNotification] = useState(false);
+  const [isStandaloneApp, setIsStandaloneApp] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
@@ -96,6 +109,65 @@ export default function Home() {
     fetchCalendarTasks();
   }, [fetchCalendarTasks]);
 
+  useEffect(() => {
+    setNotificationPermission(getNotificationPermissionState());
+    setIsStandaloneApp(isStandaloneDisplay());
+    void registerTaskBadgeServiceWorker();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia('(display-mode: standalone)');
+
+    const updateAppState = () => {
+      setNotificationPermission(getNotificationPermissionState());
+      setIsStandaloneApp(isStandaloneDisplay());
+    };
+
+    updateAppState();
+    window.addEventListener('appinstalled', updateAppState);
+    window.addEventListener('focus', updateAppState);
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updateAppState);
+    }
+
+    return () => {
+      window.removeEventListener('appinstalled', updateAppState);
+      window.removeEventListener('focus', updateAppState);
+
+      if (typeof mediaQuery.removeEventListener === 'function') {
+        mediaQuery.removeEventListener('change', updateAppState);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const refreshOnReturn = () => {
+      if (document.visibilityState !== 'visible') {
+        return;
+      }
+
+      fetchTodayTasks();
+      fetchInboxTasks();
+      fetchCalendarTasks();
+      fetchStats();
+      setNotificationPermission(getNotificationPermissionState());
+      setIsStandaloneApp(isStandaloneDisplay());
+    };
+
+    document.addEventListener('visibilitychange', refreshOnReturn);
+    window.addEventListener('focus', refreshOnReturn);
+
+    return () => {
+      document.removeEventListener('visibilitychange', refreshOnReturn);
+      window.removeEventListener('focus', refreshOnReturn);
+    };
+  }, [fetchCalendarTasks, fetchInboxTasks, fetchStats, fetchTodayTasks]);
+
   const handleAdd = async (text: string, date: string | null, priority: string) => {
     try {
       const res = await fetch('/api/todos', {
@@ -129,12 +201,29 @@ export default function Home() {
     }
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
     fetchTodayTasks();
     fetchInboxTasks();
     fetchCalendarTasks();
     fetchStats();
-  };
+  }, [fetchCalendarTasks, fetchInboxTasks, fetchStats, fetchTodayTasks]);
+
+  const todayCount = todayTasks.filter(t => !t.done).length;
+  const inboxCount = inboxTasks.length;
+
+  const handleEnableNotifications = useCallback(async () => {
+    setIsRequestingNotification(true);
+    try {
+      const permission = await requestTaskBadgePermission();
+      setNotificationPermission(permission);
+
+      if (permission === 'granted') {
+        await syncTodayTaskBadge(todayCount);
+      }
+    } finally {
+      setIsRequestingNotification(false);
+    }
+  }, [todayCount]);
 
   // Task detail handlers
   const handleOpenDetail = useCallback((task: Task) => {
@@ -158,7 +247,7 @@ export default function Home() {
     } catch (e) {
       console.error('Failed to update task:', e);
     }
-  }, []);
+  }, [handleRefresh]);
 
   const handleDeleteTask = useCallback(async (id: string) => {
     try {
@@ -171,7 +260,7 @@ export default function Home() {
     } catch (e) {
       console.error('Failed to delete task:', e);
     }
-  }, []);
+  }, [handleRefresh]);
 
   // Tab switching with slide animation
   const switchTab = useCallback((direction: 'left' | 'right') => {
@@ -234,8 +323,9 @@ export default function Home() {
     maxVertical: 120,
   });
 
-  const todayCount = todayTasks.filter(t => !t.done).length;
-  const inboxCount = inboxTasks.length;
+  useEffect(() => {
+    void syncTodayTaskBadge(todayCount);
+  }, [todayCount]);
 
   const getSlideStyle = (): React.CSSProperties => {
     if (!slideDirection) return { transform: 'translateX(0)', opacity: 1, transition: 'transform 0.2s ease-out, opacity 0.15s ease-out' };
@@ -258,6 +348,16 @@ export default function Home() {
       <div className="relative z-10 flex flex-col min-h-dvh">
         <div className="shrink-0">
           <QuickInput onAdd={handleAdd} />
+        </div>
+
+        <div className="shrink-0">
+          <NotificationPermissionCard
+            permission={notificationPermission}
+            isStandalone={isStandaloneApp}
+            isRequesting={isRequestingNotification}
+            todayCount={todayCount}
+            onRequestPermission={handleEnableNotifications}
+          />
         </div>
 
         <div
@@ -307,6 +407,7 @@ export default function Home() {
 
       {/* Task detail / edit bottom sheet */}
       <TaskDetail
+        key={detailTask?.id ?? 'empty'}
         task={detailTask}
         isOpen={!!detailTask}
         onClose={handleCloseDetail}

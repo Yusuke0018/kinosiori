@@ -302,21 +302,21 @@ export default function SeasonalBackground() {
   // ─── Main animation loop ──────────────────────────────────────────────
 
   const animate = useCallback(
-    (timestamp: number) => {
+    function animateFrame(timestamp: number) {
       if (document.hidden) {
-        animFrameRef.current = requestAnimationFrame(animate);
+        animFrameRef.current = requestAnimationFrame(animateFrame);
         return;
       }
 
       const canvas = canvasRef.current;
       if (!canvas) {
-        animFrameRef.current = requestAnimationFrame(animate);
+        animFrameRef.current = requestAnimationFrame(animateFrame);
         return;
       }
 
       const ctx = canvas.getContext('2d');
       if (!ctx) {
-        animFrameRef.current = requestAnimationFrame(animate);
+        animFrameRef.current = requestAnimationFrame(animateFrame);
         return;
       }
 
@@ -450,7 +450,7 @@ export default function SeasonalBackground() {
         drawParticle(ctx, p, timestamp);
       }
 
-      animFrameRef.current = requestAnimationFrame(animate);
+      animFrameRef.current = requestAnimationFrame(animateFrame);
     },
     [makeParticle, drawParticle, applyCssProperties]
   );

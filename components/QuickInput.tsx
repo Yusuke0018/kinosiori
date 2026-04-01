@@ -30,13 +30,9 @@ export default function QuickInput({ onAdd }: QuickInputProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [activeChip, setActiveChip] = useState<'inbox' | 'today' | 'tomorrow' | 'pick'>('inbox');
   const [priority, setPriority] = useState<Priority>('none');
-  const [placeholder, setPlaceholder] = useState('');
+  const [placeholder] = useState(() => getPlaceholderByTime());
   const inputRef = useRef<HTMLInputElement>(null);
   const datePickerRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setPlaceholder(getPlaceholderByTime());
-  }, []);
 
   // Separate effect for focus - runs after all rendering is done
   useEffect(() => {

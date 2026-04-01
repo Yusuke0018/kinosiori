@@ -25,23 +25,6 @@ export function useSwipe({
   const startY = useRef(0);
   const tracking = useRef(false);
 
-  const onTouchStart = useCallback((e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    startX.current = touch.clientX;
-    startY.current = touch.clientY;
-    tracking.current = true;
-  }, []);
-
-  const onTouchMove = useCallback((_e: React.TouchEvent) => {
-    // We only need start/end, but keeping move to potentially cancel
-  }, []);
-
-  const onTouchEnd = useCallback(() => {
-    // We handle via touchEnd with stored start position
-    // Actually we need the end position - let's use a different approach
-  }, []);
-
-  // Use a ref for the end handler that captures the last touch position
   const lastTouch = useRef({ x: 0, y: 0 });
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
