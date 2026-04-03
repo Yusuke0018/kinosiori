@@ -20,6 +20,54 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## External TODO API
+
+You can add TODO items from external services with `POST /api/external/todos`.
+
+Required environment variables:
+
+```bash
+EXTERNAL_TODO_API_KEY=your-strong-random-token
+```
+
+Optional environment variables:
+
+```bash
+EXTERNAL_TODO_ALLOWED_ORIGIN=https://your-app.example.com
+```
+
+Request headers:
+
+```http
+Content-Type: application/json
+Authorization: Bearer your-strong-random-token
+```
+
+You can also use `X-API-Key: your-strong-random-token` instead of `Authorization`.
+
+Request body:
+
+```json
+{
+  "text": "Buy milk",
+  "date": "2026-04-04",
+  "priority": "medium"
+}
+```
+
+- `text` is required.
+- `date` is optional. Use `null` or omit it for inbox tasks.
+- `priority` is optional and must be one of `none`, `low`, `medium`, `high`.
+
+Example:
+
+```bash
+curl -X POST http://localhost:3000/api/external/todos \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $EXTERNAL_TODO_API_KEY" \
+  -d '{"text":"Call clinic","date":null,"priority":"high"}'
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
