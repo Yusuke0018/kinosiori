@@ -133,12 +133,13 @@ export default function InboxView({ tasks, onRefresh, onDetail }: InboxViewProps
               onComplete={handleCompleteClick}
               onDetail={handleDetail}
               isRemoving={movingIds.has(task.id) || removingIds.has(task.id)}
+              contentClassName="pr-28"
             />
             {/* "今日やる" button overlay */}
             <button
               onClick={() => handleMoveToToday(task)}
               disabled={movingIds.has(task.id)}
-              className="absolute right-12 top-1/2 -translate-y-1/2 rounded-lg bg-[#F2724B]/10 px-3 py-1.5 text-[12px] font-medium text-[#F2724B] transition-all hover:bg-[#F2724B]/20 active:scale-95 disabled:opacity-0"
+              className="absolute right-12 top-1/2 z-10 min-w-[4.75rem] -translate-y-1/2 rounded-lg bg-[#F2724B]/10 px-3 py-1.5 text-center text-[12px] font-medium text-[#F2724B] transition-all hover:bg-[#F2724B]/20 active:scale-95 disabled:opacity-0"
             >
               今日やる
             </button>

@@ -9,6 +9,7 @@ interface TaskCardProps {
   onComplete: (task: Task) => void;
   onDetail: (task: Task) => void;
   isRemoving?: boolean;
+  contentClassName?: string;
 }
 
 const PRIORITY_COLORS: Record<string, string> = {
@@ -18,7 +19,13 @@ const PRIORITY_COLORS: Record<string, string> = {
   none: 'transparent',
 };
 
-export default function TaskCard({ task, onComplete, onDetail, isRemoving = false }: TaskCardProps) {
+export default function TaskCard({
+  task,
+  onComplete,
+  onDetail,
+  isRemoving = false,
+  contentClassName,
+}: TaskCardProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -59,7 +66,8 @@ export default function TaskCard({ task, onComplete, onDetail, isRemoving = fals
         onClick={() => onDetail(task)}
         className={cn(
           'flex min-h-[56px] flex-1 flex-col justify-center px-4 py-3 text-left',
-          !showBar && 'rounded-l-2xl'
+          !showBar && 'rounded-l-2xl',
+          contentClassName
         )}
       >
         {overdue && overdueLabel && (
